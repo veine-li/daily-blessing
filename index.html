@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>销售每日一签 - 开单祝福</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #f5f0e8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 背景装饰烟花 */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="3" fill="%23ffd700"/><line x1="50" y1="50" x2="50" y2="20" stroke="%23ff69b4" stroke-width="2"/><line x1="50" y1="50" x2="80" y2="30" stroke="%23ffa500" stroke-width="2"/><line x1="50" y1="50" x2="80" y2="70" stroke="%23ffb6c1" stroke-width="2"/><line x1="50" y1="50" x2="50" y2="80" stroke="%23dda0dd" stroke-width="2"/><line x1="50" y1="50" x2="20" y2="70" stroke="%23ff69b4" stroke-width="2"/><line x1="50" y1="50" x2="20" y2="30" stroke="%23ffa500" stroke-width="2"/></svg>') no-repeat center;
+            opacity: 0.3;
+            animation: sparkle 3s infinite;
+        }
+
+        body::before {
+            top: 10%;
+            left: 10%;
+        }
+
+        body::after {
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+                opacity: 0.6;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(139, 99, 76, 0.2);
+            padding: 30px 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+            border: 3px solid #d4a574;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 40px;
+            }
+        }
+
+        /* 星星装饰 */
+        .star {
+            position: absolute;
+            color: #d4a574;
+            font-size: 16px;
+            animation: twinkle 2s infinite;
+        }
+
+        @media (min-width: 768px) {
+            .star {
+                font-size: 20px;
+            }
+        }
+
+        .star:nth-child(1) { top: 15px; left: 20px; }
+        .star:nth-child(2) { top: 15px; right: 20px; animation-delay: 0.5s; }
+        .star:nth-child(3) { bottom: 20px; left: 25px; animation-delay: 1s; }
+        .star:nth-child(4) { bottom: 20px; right: 25px; animation-delay: 1.5s; }
+
+        @media (min-width: 768px) {
+            .star:nth-child(1) { top: 20px; left: 30px; }
+            .star:nth-child(2) { top: 20px; right: 30px; }
+            .star:nth-child(3) { bottom: 30px; left: 40px; }
+            .star:nth-child(4) { bottom: 30px; right: 40px; }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #8b634c;
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(139, 99, 76, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+        }
+
+        .subtitle {
+            color: #a0826d;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
+            .subtitle {
+                margin-bottom: 30px;
+                font-size: 16px;
+            }
+        }
+
+        .date {
+            color: #8b634c;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        @media (min-width: 768px) {
+            .date {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* 吉祥物容器 */
+        .mascot-container {
+            margin: 15px 0;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .mascot-container {
+                margin: 20px 0;
+            }
+        }
+
+        .mascot {
+            max-width: 180px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+            filter: drop-shadow(0 10px 20px rgba(139, 99, 76, 0.2));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @media (min-width: 768px) {
+            .mascot {
+                max-width: 250px;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .blessing-card {
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe8d6 100%);
+            border-radius: 20px;
+            padding: 20px 15px;
+            margin: 20px 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #d4a574;
+            box-shadow: 0 8px 20px rgba(139, 99, 76, 0.15);
+        }
+
+        @media (min-width: 768px) {
+            .blessing-card {
+                padding: 30px;
+                margin: 30px 0;
+                min-height: 150px;
+            }
+        }
+
+        .blessing-card::before {
+            content: '✨';
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.1;
+            top: -10px;
+            right: -10px;
+        }
+
+        .blessing-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #8b634c;
+            font-weight: bold;
+            z-index: 1;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @media (min-width: 768px) {
+            .blessing-text {
+                font-size: 24px;
+                line-height: 1.8;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 768px) {
+            .btn-container {
+                gap: 15px;
+            }
+        }
+
+        button {
+            background: linear-gradient(135deg, #d4a574 0%, #b8936d 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(139, 99, 76, 0.3);
+            font-weight: 600;
+        }
+
+        @media (min-width: 768px) {
+            button {
+                padding: 15px 35px;
+                font-size: 18px;
+            }
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 99, 76, 0.4);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            background: linear-gradient(135deg, #ccc 0%, #999 100%);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            box-shadow: 0 6px 20px rgba(255, 154, 158, 0.3);
+        }
+
+        .copy-btn:hover:not(:disabled) {
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 99, 76, 0.95);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: none;
+            z-index: 1000;
+            animation: slideDown 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 99, 76, 0.3);
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -100px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        .lucky-number {
+            margin-top: 15px;
+            padding: 12px;
+            background: linear-gradient(135deg, #fff9f0 0%, #ffe8d6 100%);
+            border-radius: 15px;
+            color: #8b634c;
+            font-size: 14px;
+            border: 2px solid #d4a574;
+        }
+
+        @media (min-width: 768px) {
+            .lucky-number {
+                margin-top: 20px;
+                padding: 15px;
+                font-size: 16px;
+            }
+        }
+
+        .lucky-number span {
+            color: #d4a574;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .lucky-number span {
+                font-size: 24px;
+            }
+        }
+
+        .status-info {
+            margin-top: 12px;
+            padding: 10px;
+            background: #fff9f0;
+            border-radius: 10px;
+            color: #a0826d;
+            font-size: 13px;
+            border: 1px solid #d4a574;
+        }
+
+        @media (min-width: 768px) {
+            .status-info {
+                margin-top: 15px;
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+
+        .countdown {
+            font-weight: bold;
+            color: #d4a574;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="star">⭐</div>
+        <div class="star">⭐</div>
+        <div class="star">⭐</div>
+        <div class="star">⭐</div>
+
+        <h1>✈️ 今天我要开单啦</h1>
+        <p class="subtitle">冲鸭！今天也要全力以赴！</p>
+        <div class="date" id="currentDate"></div>
+
+        <div class="mascot-container">
+            <img src="./冒险小理.jpg" alt="吉祥物" class="mascot" id="mascot">
+        </div>
+
+        <div class="blessing-card">
+            <div class="blessing-text" id="blessingText">
+                点击下方按钮<br>抽取今日祝福！
+            </div>
+        </div>
+
+        <div class="lucky-number" id="luckyNumber" style="display: none;">
+            今日幸运数字：<span id="luckyNum"></span>
+        </div>
+
+        <div class="status-info" id="statusInfo" style="display: none;">
+            <span id="statusText"></span>
+        </div>
+
+        <div class="btn-container">
+            <button id="drawBtn" onclick="generateBlessing()">🎲 立即抽签</button>
+            <button class="copy-btn" onclick="copyText()">📋 复制分享</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">复制成功！快去分享吧～</div>
+
+    <script>
+        // 显示当前日期
+        function updateDate() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('zh-CN', options);
+        }
+
+        // 获取今天的日期字符串（用于判断是否是同一天）
+        function getTodayString() {
+            const now = new Date();
+            return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+        }
+
+        // 检查今天是否已经抽过签
+        function hasDrawnToday() {
+            const lastDrawDate = localStorage.getItem('lastDrawDate');
+            const todayString = getTodayString();
+            return lastDrawDate === todayString;
+        }
+
+        // 保存抽签记录
+        function saveDrawRecord(blessing, luckyNum) {
+            const todayString = getTodayString();
+            localStorage.setItem('lastDrawDate', todayString);
+            localStorage.setItem('todayBlessing', blessing);
+            localStorage.setItem('todayLuckyNum', luckyNum);
+        }
+
+        // 获取今天已抽取的签
+        function getTodayDraw() {
+            return {
+                blessing: localStorage.getItem('todayBlessing'),
+                luckyNum: localStorage.getItem('todayLuckyNum')
+            };
+        }
+
+        // 计算距离明天0点的倒计时
+        function getCountdown() {
+            const now = new Date();
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const diff = tomorrow - now;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            return `${hours}小时${minutes}分${seconds}秒`;
+        }
+
+        // 更新状态信息
+        function updateStatusInfo() {
+            const statusInfo = document.getElementById('statusInfo');
+            const statusText = document.getElementById('statusText');
+            const drawBtn = document.getElementById('drawBtn');
+
+            if (hasDrawnToday()) {
+                statusInfo.style.display = 'block';
+                drawBtn.disabled = true;
+
+                const countdown = getCountdown();
+                statusText.innerHTML = `今日已抽签！明天再来吧～<br><span class="countdown">${countdown}</span> 后可再次抽签`;
+
+                // 显示今天已抽取的内容
+                const todayDraw = getTodayDraw();
+                document.getElementById('blessingText').textContent = todayDraw.blessing;
+                document.getElementById('luckyNum').textContent = todayDraw.luckyNum;
+                document.getElementById('luckyNumber').style.display = 'block';
+                currentBlessing = todayDraw.blessing;
+            } else {
+                statusInfo.style.display = 'none';
+                drawBtn.disabled = false;
+            }
+        }
+
+        // 祝福语库 - 混合风格
+        const blessings = {
+            励志激昂: [
+                "今日必成大单！业绩长虹！💪",
+                "客户主动上门，签约顺利成功！🎯",
+                "订单滚滚来，业绩节节高！📈",
+                "所向披靡，单单必中！🏆",
+                "今日开单王者，非你莫属！👑",
+                "业绩爆表，提成翻倍！💰",
+                "客户说YES，合同秒签！✍️",
+                "今天是你的幸运日，大单在等你！🌟"
+            ],
+            轻松幽默: [
+                "财神爷今天盯上你了，跑都跑不掉！😄",
+                "今日宜开单，忌偷懒！哈哈～🤣",
+                "客户的钱包已经按捺不住了！💸",
+                "今天不开单？那是不可能的！🎪",
+                "订单君说：今天必须找到你！📞",
+                "你的业绩今天要上天！🚀",
+                "客户预警：今日遇贵人！就是你～😎",
+                "开单buff已叠满，出门即成交！🎮"
+            ],
+            传统吉祥: [
+                "生意兴隆通四海，财源茂盛达三江！🏮",
+                "财源广进，八方来财！🧧",
+                "紫气东来，好运当头！☁️",
+                "金玉满堂，财运亨通！💎",
+                "福星高照，万事如意！⭐",
+                "鸿运当头，大吉大利！🎊",
+                "财源滚滚，日进斗金！🌊",
+                "开门大吉，财神进门！🚪"
+            ],
+            实用激励: [
+                "今日目标：拿下3个意向客户！加油！💼",
+                "机会就在眼前，主动出击必有收获！📲",
+                "微笑服务，用心沟通，成交就在今天！😊",
+                "相信自己，今天一定能签下大单！🎯",
+                "保持热情，客户能感受到你的真诚！❤️",
+                "每一通电话都可能是转折点！📞",
+                "准备充分，今天就是你的主场！🎬",
+                "坚持到底，胜利属于你！🏅"
+            ],
+            网络流行: [
+                "今日运势：冲冲冲！开单开到手软！💪",
+                "YYDS！今天必定业绩炸裂！🔥",
+                "绝绝子！今天的客户都是送分题！📝",
+                "冲鸭！今天就是开单日！🦆",
+                "好运值已充满，准备收获大单！⚡",
+                "今日状态：无敌是多么寂寞～🎵",
+                "开单模式已启动，请客户做好准备！🎬",
+                "今天的你：开单机器，停不下来！🤖"
+            ]
+        };
+
+        let currentBlessing = "";
+
+        function generateBlessing() {
+            // 检查今天是否已经抽过签
+            if (hasDrawnToday()) {
+                showToast('今天已经抽过签啦！明天再来吧～');
+                return;
+            }
+
+            // 随机选择一个分类
+            const categories = Object.keys(blessings);
+            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+
+            // 从该分类中随机选择一条祝福语
+            const categoryBlessings = blessings[randomCategory];
+            currentBlessing = categoryBlessings[Math.floor(Math.random() * categoryBlessings.length)];
+
+            // 生成幸运数字
+            const luckyNum = Math.floor(Math.random() * 100) + 1;
+
+            // 保存抽签记录
+            saveDrawRecord(currentBlessing, luckyNum);
+
+            // 更新显示
+            document.getElementById('blessingText').textContent = currentBlessing;
+            document.getElementById('luckyNum').textContent = luckyNum;
+            document.getElementById('luckyNumber').style.display = 'block';
+
+            // 触发吉祥物动画
+            const mascot = document.getElementById('mascot');
+            mascot.style.animation = 'none';
+            setTimeout(() => {
+                mascot.style.animation = 'float 3s ease-in-out infinite';
+            }, 10);
+
+            // 更新状态信息
+            updateStatusInfo();
+
+            // 显示成功提示
+            showToast('🎉 抽签成功！祝你好运连连！');
+        }
+
+        function copyText() {
+            if (!currentBlessing) {
+                showToast('请先抽取祝福语哦～');
+                return;
+            }
+
+            const date = document.getElementById('currentDate').textContent;
+            const luckyNum = document.getElementById('luckyNum').textContent;
+            const copyContent = `✈️【今天我要开单啦】✈️\n${date}\n\n${currentBlessing}\n\n🍀 幸运数字：${luckyNum}\n\n愿好运常伴，业绩长虹！🎉`;
+
+            // 复制到剪贴板
+            navigator.clipboard.writeText(copyContent).then(() => {
+                showToast('📋 复制成功！快去分享吧～');
+            }).catch(() => {
+                // 备用复制方法
+                const textarea = document.createElement('textarea');
+                textarea.value = copyContent;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('📋 复制成功！快去分享吧～');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // 页面加载时的初始化
+        function init() {
+            updateDate();
+            updateStatusInfo();
+
+            // 如果已经抽过签，每秒更新倒计时
+            if (hasDrawnToday()) {
+                setInterval(() => {
+                    if (!hasDrawnToday()) {
+                        // 已经到了新的一天，刷新页面状态
+                        location.reload();
+                    } else {
+                        updateStatusInfo();
+                    }
+                }, 1000);
+            }
+        }
+
+        // 页面加载时执行初始化
+        init();
+
+        // 添加键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && !hasDrawnToday()) {
+                e.preventDefault();
+                generateBlessing();
+            } else if (e.key === 'c' || e.key === 'C') {
+                copyText();
+            }
+        });
+    </script>
+</body>
+</html>
